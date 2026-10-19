@@ -1,0 +1,173 @@
+/* Загрузочный экран «Арена Силы». Без flex/grid и CSS-переменных — работает и в старом движке GMod. */
+
+@font-face { font-family: "Exo2"; src: url("fonts/Exo2-Regular.ttf") format("truetype"); font-weight: 400; }
+@font-face { font-family: "Exo2"; src: url("fonts/Exo2-Medium.ttf") format("truetype"); font-weight: 500; }
+@font-face { font-family: "Exo2"; src: url("fonts/Exo2-SemiBold.ttf") format("truetype"); font-weight: 600; }
+@font-face { font-family: "Exo2"; src: url("fonts/Exo2-Bold.ttf") format("truetype"); font-weight: 700; }
+
+html, body {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	background: #05070b;
+	color: #e6ebf2;
+	font-family: "Exo2", "Segoe UI", Arial, sans-serif;
+	-webkit-user-select: none;
+	user-select: none;
+}
+
+/* ---------- слайд-шоу ---------- */
+#slides, .shade, .scanlines { position: absolute; left: 0; top: 0; width: 100%; height: 100%; }
+
+.slide {
+	position: absolute;
+	left: -3%; top: -3%;
+	width: 106%; height: 106%;
+	background-size: cover;
+	background-position: center;
+	opacity: 0;
+	-webkit-transition: opacity 2s ease;
+	transition: opacity 2s ease;
+}
+.slide.on { opacity: 1; }
+.slide.zoom {
+	-webkit-animation: kenburns 16s linear forwards;
+	animation: kenburns 16s linear forwards;
+}
+@-webkit-keyframes kenburns { from { -webkit-transform: scale(1); } to { -webkit-transform: scale(1.08); } }
+@keyframes kenburns { from { transform: scale(1); } to { transform: scale(1.08); } }
+
+.shade {
+	background:
+		-webkit-linear-gradient(top, rgba(5, 7, 11, 0.55) 0%, rgba(5, 7, 11, 0.15) 35%, rgba(5, 7, 11, 0.35) 60%, rgba(5, 7, 11, 0.94) 100%);
+	background:
+		linear-gradient(to bottom, rgba(5, 7, 11, 0.55) 0%, rgba(5, 7, 11, 0.15) 35%, rgba(5, 7, 11, 0.35) 60%, rgba(5, 7, 11, 0.94) 100%);
+}
+.scanlines {
+	background-image: -webkit-repeating-linear-gradient(top, rgba(255, 255, 255, 0.025) 0px, rgba(255, 255, 255, 0.025) 1px, transparent 1px, transparent 3px);
+	background-image: repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 0px, rgba(255, 255, 255, 0.025) 1px, transparent 1px, transparent 3px);
+	pointer-events: none;
+}
+
+/* ---------- логотип ---------- */
+#top { position: absolute; left: 0; right: 0; top: 4.5vh; text-align: center; }
+#logo {
+	width: 30vw;
+	max-width: 760px;
+	-webkit-filter: drop-shadow(0 0 30px rgba(0, 0, 0, 0.6));
+	filter: drop-shadow(0 0 30px rgba(0, 0, 0, 0.6));
+	opacity: 0;
+	-webkit-transition: opacity 1.2s ease;
+	transition: opacity 1.2s ease;
+}
+#logo.on { opacity: 1; }
+#details {
+	margin-top: 0.6vh;
+	font-size: 0.95vw;
+	letter-spacing: 0.12vw;
+	text-transform: uppercase;
+	color: #a9b4c4;
+}
+#details .dot { color: #e6af46; margin: 0 0.8vw; }
+
+/* ---------- стороны ---------- */
+#sides {
+	position: absolute;
+	left: 0; right: 0;
+	top: 57vh;
+	text-align: center;
+	font-size: 0;
+}
+.side {
+	display: inline-block;
+	vertical-align: top;
+	width: 18vw;
+	min-height: 8.8vw;
+	margin: 0 0.7vw;
+	padding: 1.1vw 1.2vw 1.2vw;
+	text-align: left;
+	background: rgba(6, 9, 14, 0.72);
+	border: 1px solid rgba(255, 255, 255, 0.07);
+	border-top-width: 3px;
+	position: relative;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	opacity: 0;
+	-webkit-transform: translateY(12px);
+	transform: translateY(12px);
+	-webkit-transition: opacity 0.8s ease, -webkit-transform 0.8s ease;
+	transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.side.on { opacity: 1; -webkit-transform: none; transform: none; }
+.side .glow {
+	position: absolute; left: 0; top: 0; right: 0; height: 60%;
+	opacity: 0.22;
+}
+.side .name { position: relative; font-size: 1.15vw; font-weight: 700; letter-spacing: 0.08vw; text-transform: uppercase; }
+.side .motto { position: relative; margin-top: 0.35vw; font-size: 0.85vw; font-weight: 600; }
+.side .text { position: relative; margin-top: 0.55vw; font-size: 0.8vw; line-height: 1.35; color: #b9c3d1; }
+
+/* ---------- низ: совет и прогресс ---------- */
+#bottom { position: absolute; left: 6vw; right: 6vw; bottom: 6.5vh; }
+
+#tip {
+	min-height: 2.2vw;
+	margin-bottom: 2.2vh;
+	font-size: 1.05vw;
+	color: #dfe6ef;
+	-webkit-transition: opacity 0.5s ease;
+	transition: opacity 0.5s ease;
+}
+#tip.off { opacity: 0; }
+.tip-label {
+	display: inline-block;
+	margin-right: 1vw;
+	padding: 0.15vw 0.6vw;
+	font-size: 0.7vw;
+	font-weight: 700;
+	letter-spacing: 0.12vw;
+	color: #0b0d12;
+	background: #e6af46;
+	vertical-align: 0.12vw;
+}
+
+#status-row { font-size: 0.85vw; letter-spacing: 0.06vw; color: #a9b4c4; margin-bottom: 0.7vh; }
+#status { text-transform: uppercase; }
+#percent { float: right; color: #ffffff; font-weight: 700; }
+
+#bar {
+	position: relative;
+	height: 6px;
+	background: rgba(255, 255, 255, 0.07);
+	overflow: hidden;
+}
+#bar-fill {
+	position: absolute; left: 0; top: 0; bottom: 0;
+	width: 0;
+	background: -webkit-linear-gradient(left, #e13737 0%, #af9bd7 50%, #4696ff 100%);
+	background: linear-gradient(to right, #e13737 0%, #af9bd7 50%, #4696ff 100%);
+	-webkit-transition: width 0.4s ease;
+	transition: width 0.4s ease;
+}
+#bar-glow {
+	position: absolute; top: 0; bottom: 0; width: 18%;
+	left: -20%;
+	background: -webkit-linear-gradient(left, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.35) 50%, rgba(255, 255, 255, 0) 100%);
+	background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.35) 50%, rgba(255, 255, 255, 0) 100%);
+	-webkit-animation: sweep 2.4s linear infinite;
+	animation: sweep 2.4s linear infinite;
+}
+@-webkit-keyframes sweep { from { left: -20%; } to { left: 100%; } }
+@keyframes sweep { from { left: -20%; } to { left: 100%; } }
+
+#file {
+	margin-top: 0.7vh;
+	height: 1.2vw;
+	font-size: 0.7vw;
+	color: #6f7b8c;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
