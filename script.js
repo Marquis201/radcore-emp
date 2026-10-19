@@ -10,6 +10,19 @@
 
 	var state = { total: 0, needed: 0, status: "", gotDetails: false, demo: false };
 
+	// ---------------------------------------------------------------- масштаб сцены 1920×1080
+	var stage = $("stage");
+	function fit() {
+		var w = window.innerWidth || document.documentElement.clientWidth;
+		var h = window.innerHeight || document.documentElement.clientHeight;
+		var k = Math.min(w / 1920, h / 1080);
+		var t = "scale(" + k + ")";
+		stage.style.webkitTransform = t;
+		stage.style.transform = t;
+	}
+	fit();
+	window.onresize = fit;
+
 	// ---------------------------------------------------------------- логотип
 	var logo = $("logo");
 	if (cfg.logo) logo.src = cfg.logo;

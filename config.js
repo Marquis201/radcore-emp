@@ -9,7 +9,10 @@ var LOADING_CONFIG = {
 	slides: [
 		"img/slides/slide1.jpg",
 		"img/slides/slide2.jpg",
-		"img/slides/slide3.jpg"
+		"img/slides/slide3.jpg",
+		"img/slides/slide4.jpg",
+		"img/slides/slide5.jpg",
+		"img/slides/slide6.jpg"
 	],
 	slideSeconds: 8,     // сколько показывается один слайд
 
